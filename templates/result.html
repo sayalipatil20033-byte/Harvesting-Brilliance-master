@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pumpkin Classification Result</title>
+    <link rel="stylesheet" href="/static/styles/style.css">
+</head>
+<body>
+    <div class="page-wrapper">
+        <div class="container">
+            <!-- Success Animation -->
+            <div class="success-icon">
+                <div class="checkmark-circle">
+                    <div class="checkmark">✓</div>
+                </div>
+            </div>
+
+            <h1>Classification Complete!</h1>
+            
+            <!-- Result Box -->
+            <div class="result-box">
+                <p class="result-label">Predicted Category</p>
+                <div class="result-category">
+                    <span class="category-icon">🎃</span>
+                    <span class="category-name">
+                        {% if variety_name %}
+                            {{ variety_name }}
+                        {% elif prediction == 0 %}
+                            Çerçevelik
+                        {% elif prediction == 1 %}
+                            Ürgüp Sivrisi
+                        {% else %}
+                            Unknown
+                        {% endif %}
+                    </span>
+                </div>
+                <div class="confidence-badge">
+                    {% if confidence %}
+                        {{ "%.1f"|format(confidence) }}% Confidence
+                    {% else %}
+                        High Confidence Match
+                    {% endif %}
+                </div>
+            </div>
+
+            <!-- Input Summary Section -->
+            <div class="summary-section">
+                <h2>Input Measurements Summary</h2>
+                <div class="measurements-grid">
+                    {% for feature, value in input_summary.items() %}
+                        <div class="measurement-card">
+                            <div class="measurement-label">{{ feature.replace('_', ' ') }}</div>
+                            <div class="measurement-value">{{ value }}</div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="action-buttons">
+                <a href="/" class="button button-secondary">
+                    <span class="button-icon">🏠</span>
+                    Back to Home
+                </a>
+                <a href="/predict" class="button button-primary">
+                    <span class="button-icon">🔁</span>
+                    New Prediction
+                </a>
+            </div>
+
+            <!-- Additional Info -->
+            <div class="info-card">
+                <h3>About This Classification</h3>
+                <p>
+                    This prediction was generated using a Random Forest Classifier trained on 12 morphological features. 
+                    The model has been trained to distinguish between Çerçevelik and Ürgüp Sivrisi pumpkin varieties 
+                    based on their physical characteristics with high accuracy.
+                </p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
